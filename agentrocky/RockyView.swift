@@ -21,6 +21,10 @@ struct RockyView: View {
             Button(action: {
                 state.isChatOpen.toggle()
                 showChat = state.isChatOpen
+                if showChat {
+                    // Activate app so the popover can receive keyboard input
+                    NSApp.activate(ignoringOtherApps: true)
+                }
             }) {
                 if let img = NSImage(named: currentSpriteName) {
                     Image(nsImage: img)
@@ -37,8 +41,8 @@ struct RockyView: View {
             }
             .buttonStyle(.plain)
             .popover(isPresented: $showChat, arrowEdge: .top) {
-                ChatView()
-                    .frame(width: 360, height: 480)
+                ChatView(session: state.session)
+                    .frame(width: 420, height: 520)
             }
             .onChange(of: showChat) { open in
                 state.isChatOpen = open

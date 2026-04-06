@@ -81,11 +81,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func updatePosition() {
+        let now = Date()
+        defer { lastTick = now }
         guard !rockyState.isChatOpen else { return }
 
-        let now = Date()
         let dt = now.timeIntervalSince(lastTick)
-        lastTick = now
 
         let screen = rockyState.screenBounds
         let maxX = screen.maxX - rockyWidth
